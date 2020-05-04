@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\compiler\vc15win64\CMakeFiles\30c85877bf89c19c5ad99e64dbfb0112\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{9B718644-2BD1-3F98-AA40-6841722D2E77}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventImpl.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvd.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdDataStream.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdDefaultFileTransport.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdDefaultSocketTransport.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdImpl.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdMemClient.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdObjectModelMetaData.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdObjectRegistrar.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdProfileZoneClient.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdUserRenderer.cpp">
+      <Filter>src\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\include\pvd\PxPvd.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\include\pvd\PxPvdTransport.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\filebuf\include\PsAsciiConversion.h">
+      <Filter>filebuf\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\filebuf\include\PsAsciiConversion.inl">
+      <Filter>filebuf\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\filebuf\include\PsFileBuffer.h">
+      <Filter>filebuf\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\filebuf\include\PsIOStream.h">
+      <Filter>filebuf\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\filebuf\include\PsIOStream.inl">
+      <Filter>filebuf\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\filebuf\include\PsMemoryBuffer.h">
+      <Filter>filebuf\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PsPvd.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PxProfileAllocatorWrapper.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PxPvdClient.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PxPvdDataStream.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PxPvdDataStreamHelpers.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PxPvdErrorCodes.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PxPvdObjectModelBaseTypes.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PxPvdRenderBuffer.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\include\PxPvdUserRenderer.h">
+      <Filter>src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileContextProvider.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileContextProviderImpl.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileDataBuffer.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileDataParsing.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventBuffer.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventBufferAtomic.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventBufferClient.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventBufferClientManager.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventId.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventMutex.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventNames.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEvents.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventSender.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileEventSerialization.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileMemory.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileMemoryBuffer.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileMemoryEventBuffer.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileMemoryEvents.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileScopedEvent.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileScopedMutexLock.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdProfileZone.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileZoneImpl.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileZoneManager.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxProfileZoneManagerImpl.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdBits.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdByteStreams.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdCommStreamEvents.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdCommStreamEventSink.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdCommStreamTypes.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdDefaultFileTransport.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdDefaultSocketTransport.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdFoundation.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdImpl.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdInternalByteStreams.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdMarshalling.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdMemClient.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdObjectModelInternalTypeDefs.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdObjectModelInternalTypes.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdObjectModelMetaData.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdObjectRegistrar.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdProfileZoneClient.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdUserRenderImpl.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\pvd\src\PxPvdUserRenderTypes.h">
+      <Filter>src\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Nicholas\Documents\4900\modules\FinalRocket\thirdParty\PhysX\physx\source\compiler\cmake\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="filebuf">
+      <UniqueIdentifier>{FE1F7BE8-34C4-3E01-A859-A2B2A5305714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="filebuf\include">
+      <UniqueIdentifier>{93C0ACC9-E58C-3AD7-BEA1-658DFBDC178F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{A9FFADC3-4CE6-3ACE-9EF5-A5D61348167D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{64B979B4-5A94-3087-A691-230B10631A1F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\include">
+      <UniqueIdentifier>{D52CDD82-D18B-3572-B8D9-1BB4935B4501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\src">
+      <UniqueIdentifier>{0033B007-5C75-3204-A21D-2DAF26C9C1F2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
