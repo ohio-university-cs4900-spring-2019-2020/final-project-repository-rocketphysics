@@ -3,11 +3,13 @@
 #include "PxPhysicsAPI.h"
 #include <map>
 #include "WOPhysXActor.h"
+#include "RocketContact.h"
 
 namespace Aftr {
 
 	class ModelDataSharedID;
 	class WOPhysXActor;
+	class RocketContact;
 	
 	class PhysicsModule {
 	public:
@@ -21,7 +23,7 @@ namespace Aftr {
 		physx::PxPhysics* physics;
 		physx::PxScene* scene;
 		physx::PxFoundation* foundation;
-
+		physx::PxSimulationEventCallback* callback;
 
 	protected:
 		

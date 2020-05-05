@@ -18,8 +18,6 @@ namespace Aftr {
 		virtual void onCreate(const std::string& path,
 			Vector scale = Vector(1, 1, 1),
 			MESH_SHADING_TYPE shadingType = MESH_SHADING_TYPE::mstAUTO);
-		virtual void onTrigger();
-		virtual void onContact();
 		void setDisplayMatrix(Mat4 matrix);
 		physx::PxRigidDynamic* physxActor;
 
