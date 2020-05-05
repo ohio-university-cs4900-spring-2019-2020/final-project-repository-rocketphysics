@@ -25,16 +25,6 @@ void WOPhysXActor::onCreate(const std::string& path,
 	WO::onCreate(path, scale, shadingType);
 }
 
-void WOPhysXActor::onTrigger() {
-	std::cout << "Triggered!\n";
-	delete this;
-}
-
-void WOPhysXActor::onContact() {
-	std::cout << "Contacted!\n";
-	delete this;
-}
-
 void WOPhysXActor::setDisplayMatrix(Mat4 matrix) {
 	WO::getModel()->setDisplayMatrix(matrix);
 }

@@ -1,5 +1,6 @@
 #include "PhysicsModule.h"
 #include "Model.h"
+#include "RocketContact.h"
 
 #include <iostream>
 

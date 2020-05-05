@@ -35,6 +35,7 @@
 #include "WOPhysXActor.h"
 #include "WORocket.h"
 #include "Mat4.h"
+#include <PxSceneDesc.h>
 
 
 using namespace Aftr;
@@ -97,9 +98,21 @@ void GLViewFinalRocket::updateWorld()
                           //If you want to add additional functionality, do it after
                           //this call.
    //this->rocketLauncher->getModel()->setDisplayMatrix(this->cam->getDisplayMatrix());
+   // Update first-person rocket launcher model
    this->rocketLauncher->setPosition(this->cam->getPosition() - this->cam->getNormalDirection() * (0.2f) + this->cam->getLookDirection() * (0.1f));
    rocketLauncher->getModel()->setDisplayMatrix(this->cam->getDisplayMatrix() * Mat4::rotateIdentityMat(Vector(0, -1, 0), Aftr::PI / 1.7));
+   // Simulate physics
    this->physicsEngine->simulate();
+   // Sync rocket and trigger objects
+   for (auto& i : liveRockets) {
+	   i.second->setPosition(i.first->getPosition());
+	   i.second->setDisplayMatrix(i.first->getDisplayMatrix());
+   }
+   for (auto& i : objects) {
+	   i.second->setPosition(i.first->getPosition());
+	   i.second->setDisplayMatrix(i.first->getDisplayMatrix());
+   }
+   //this->cam->setPosition(player->getPosition());
 
 }
 
@@ -144,10 +157,7 @@ void GLViewFinalRocket::onKeyDown( const SDL_KeyboardEvent& key )
    {
 	   this->resetBoxes();
    }
-   if (key.keysym.sym == SDLK_t)
-   {
-	   this->createTrigger();
-   }
+
 }
 
 
@@ -237,21 +247,31 @@ void Aftr::GLViewFinalRocket::loadMap()
    
    createFinalRocketWayPoints();
 
+   // Init sound
    this->gameSounds = SoundModule::init();
    this->gameSounds->play_sound_2D("../mm/sounds/bensound-jazzyfrenchy.ogg", true, false, true);
    this->gameSounds->get_sound_2D().at(0)->setVolume(0.3f);
 
+   // Init physics
    this->physicsEngine = PhysicsModule::New();
    PxMaterial* gMaterial = this->physicsEngine->getPhysics()->createMaterial(.5f, .5f, .6f);
    PxRigidStatic* groundPlane = PxCreatePlane(*this->physicsEngine->getPhysics(), PxPlane(PxVec3(0, 0, 1), 0), *gMaterial);
-   this->physicsEngine->getScene()->addActor(*groundPlane);
+   groundPlane->setName("Grass");
+   this->physicsEngine->scene->addActor(*groundPlane);
+   //this->physicsEngine->scene->setFlag(PxSceneFlag::eEXCLUDE_KINEMATICS_FROM_ACTIVE_ACTORS, false);
 
+   // Add simulation callback to the engine
+   this->contact = new RocketContact();
+   this->physicsEngine->scene->setSimulationEventCallback(this->contact);
+
+   // First-person "rocket launcher" model
    this->rocketLauncher = WO::New("../mm/models/Pencil/Dwarf_Pencil.obj", Vector(0.1f, 0.1f, 0.1f));
    this->rocketLauncher->getModel()->setDisplayMatrix(this->cam->getDisplayMatrix());
    this->rocketLauncher->setPosition(this->cam->getPosition() - (this->cam->getNormalDirection() * (0.2f)) + (this->cam->getLookDirection() * 0.2f));
    rocketLauncher->getModel()->setDisplayMatrix(Mat4::rotateIdentityMat(Vector(0, -1, 0), Aftr::PI / 1.7));
    worldLst->push_back(rocketLauncher);
 
+   // Three boxes that are physics objects
    for (int i = 0; i < 3; i++) {
 	   PxTransform trans;
 	   if (i == 0)
@@ -262,6 +282,7 @@ void Aftr::GLViewFinalRocket::loadMap()
 		   trans = PxTransform(PxVec3(27.5, 25, 8));
 	   PxShape* shape = this->physicsEngine->physics->createShape(PxBoxGeometry(PxVec3(2.0f, 2.0f, 2.0f)), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
 	   PxRigidDynamic* actor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 5.0f);
+	   actor->setName("Box");
 	   WOPhysXActor* box = WOPhysXActor::New(actor, shinyRedPlasticCube, Vector(1, 1, 1));
 	   if (i == 0)
 		   box->setPosition(Vector(25, 25, 3));
@@ -269,6 +290,8 @@ void Aftr::GLViewFinalRocket::loadMap()
 		   box->setPosition(Vector(30, 25, 3));
 	   else
 		   box->setPosition(Vector(27.5, 25, 8));
+	   
+	   wo->setLabel("Box");
 	   box->physxActor->userData = box;
 	   worldLst->push_back(box);
 	   this->physicsEngine->scene->addActor(*box->physxActor);
@@ -276,6 +299,35 @@ void Aftr::GLViewFinalRocket::loadMap()
 	   this->boxes.insert(std::pair(box, numBoxes));
 	   numBoxes++;
    }
+
+   PxTransform trans2 = PxTransform(PxVec3(-25, 25, 3));
+   PxShape* shape2 = this->physicsEngine->physics->createShape(PxBoxGeometry(PxVec3(2.0f, 2.0f, 2.0f)), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
+   shape2->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true); // Flags
+   shape2->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+   PxRigidDynamic* actor2 = PxCreateDynamic(*this->physicsEngine->physics, trans2, *shape2, 5.0f);
+   actor2->setName("Box2_SS");
+   WOPhysXActor* box2 = WOPhysXActor::New(actor2, shinyRedPlasticCube, Vector(1, 1, 1));
+   box2->setPosition(Vector(-25, 25, 3));
+   box2->setLabel("Box2");
+   box2->physxActor->userData = box2;
+   worldLst->push_back(box2);
+   this->physicsEngine->scene->addActor(*box2->physxActor);
+
+   // Trigger shape box
+   PxTransform trans = PxTransform(PxVec3(-25, 25, 3));
+   PxShape* shape = this->physicsEngine->physics->createShape(PxBoxGeometry(PxVec3(2.2f, 2.2f, 2.2f)), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
+   shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false); // Flags
+   shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+   PxRigidDynamic* actor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 5.0f);
+   actor->setName("Box2_TS");
+   WOPhysXActor* box = WOPhysXActor::New(actor, shinyRedPlasticCube, Vector(1, 1, 1));
+	box->setPosition(Vector(-25, 25, 3));
+   box->setLabel("Box2");
+   box->physxActor->userData = box;
+   worldLst->push_back(box);
+   this->physicsEngine->scene->addActor(*box->physxActor);
+   
+   this->objects.insert(std::pair(box2, box));
 }
 
 
@@ -291,34 +343,64 @@ void GLViewFinalRocket::createFinalRocketWayPoints()
    worldLst->push_back( wayPt );
 }
 
+// Creates simulation shape and trigger shape and maps them together
 void GLViewFinalRocket::shootRocket() {
 	Vector position = this->cam->getPosition();
 	Vector direction = this->cam->getLookDirection();
-	Vector spawnLoc = Vector(position.x + (2.0f * direction.x), position.y + (2.0f * direction.y), position.z + (2.0f * direction.z)) - (this->cam->getNormalDirection() * 0.2f);
+	float dist = 2.5f;
+	Vector spawnLoc = Vector(position.x + (dist * direction.x), position.y + (dist * direction.y), position.z + (dist * direction.z)) - (this->cam->getNormalDirection() * 0.2f);
 
+	std::cout << "Shot rocket from position " << position
+	<< "\nIn direction " << direction << std::endl;
+
+	this->liveRockets.insert(std::pair(startupRocket(spawnLoc, direction), startupTrigger(spawnLoc)));
+}
+
+
+// Creates a spherical physics object eith eSIMULATION_SHAPE raised
+WORocket* GLViewFinalRocket::startupRocket(Vector spawnLoc, Vector direction) {
 	PxTransform trans = PxTransform(PxVec3(spawnLoc.x, spawnLoc.y, spawnLoc.z));
 	PxShape* shape = this->physicsEngine->physics->createShape(PxSphereGeometry(0.2f), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
-	shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-	PxRigidDynamic* actor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 5.0f);
-	std::cout << actor->getMass() << std::endl;
+	shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false); // Flags
+	shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
+	PxRigidDynamic* rocketActor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 5.0f);
+	rocketActor->setName("Rocket_SS");
 
-	WORocket* wo = WORocket::New(actor, "../mm/models/sphere.dae", Vector(0.1f, 0.1f, 0.1f));
+	WORocket* wo = WORocket::New(rocketActor, "../mm/models/sphere.dae", Vector(0.1f, 0.1f, 0.1f));
+	wo->isVisible = false;
 	wo->setPosition(spawnLoc);
-	/*Mat4 pose;
-	pose = Mat4::rotateIdentityMat(Vector(1, 0, 0), Aftr::PI / 2);
-	wo->getModel()->setDisplayMatrix(pose);*/
+	wo->setLabel("Rocket");
 	wo->physxActor->userData = wo;
 	worldLst->push_back(wo);
 
-	std::cout << "Shot rocket from position " << wo->getPosition() 
-		<< "\nIn direction " << direction << std::endl;
 	this->physicsEngine->scene->addActor(*wo->physxActor);
 
 	PxVec3 pvec_dir = PxVec3(direction.x * 300.0f, direction.y * 300.0f, direction.z * 300.0f + 15.0f);
 	wo->physxActor->addForce(pvec_dir);
-
+	return wo;
 }
 
+// Creates a spherical physics object eith eTRIGGER_SHAPE raised 
+WOPhysXActor* GLViewFinalRocket::startupTrigger(Vector spawnLoc) {
+	PxTransform trans = PxTransform(PxVec3(spawnLoc.x, spawnLoc.y, spawnLoc.z));
+	PxShape* shape = this->physicsEngine->physics->createShape(PxSphereGeometry(0.4f), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
+	shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false); // Flags
+	shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+	PxRigidDynamic* actor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 5.0f);
+	actor->setName("Rocket_TS");
+
+	WOPhysXActor* wo = WOPhysXActor::New(actor, "../mm/models/sphere.dae", Vector(0.1f, 0.1f, 0.1f));
+	wo->setPosition(spawnLoc);
+	wo->setLabel("RocketTrigger");
+	wo->physxActor->userData = wo;
+	worldLst->push_back(wo);
+
+	this->physicsEngine->scene->addActor(*wo->physxActor);
+
+	return wo;
+}
+
+// Resets the 3 physics boxes to their original stack
 void GLViewFinalRocket::resetBoxes() {
 	for (auto& i : this->boxes) {
 		if (i.second == 0)
@@ -328,9 +410,4 @@ void GLViewFinalRocket::resetBoxes() {
 		else
 			i.first->physxActor->setGlobalPose(PxTransform(PxVec3(27.5, 25, 8)));
 	}
-}
-
-void GLViewFinalRocket::createTrigger() {
-	PxShape* triggerShape;
-
 }

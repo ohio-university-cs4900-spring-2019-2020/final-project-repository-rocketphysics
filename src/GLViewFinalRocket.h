@@ -4,7 +4,9 @@
 #include "PxPhysicsAPI.h"
 #include "PhysicsModule.h"
 #include "SoundModule.h"
-//#include "RocketContact.h"
+#include "WORocket.h"
+#include "WOPhysXActor.h"
+#include "RocketContact.h"
 
 namespace Aftr
 {
@@ -40,7 +42,8 @@ public:
 
    void shootRocket();
    void resetBoxes();
-   void createTrigger();
+   WORocket* startupRocket(Vector spawnLoc, Vector direction);
+   WOPhysXActor* startupTrigger(Vector spawnLoc);
 
    PhysicsModule* physicsEngine;
    SoundModule* gameSounds;
@@ -49,9 +52,12 @@ protected:
    GLViewFinalRocket( const std::vector< std::string >& args );
    virtual void onCreate();
    WO* rocketLauncher;
+   WOPhysXActor* player;
    std::map<WOPhysXActor*, int> boxes;
    int numBoxes = 0;
-   //std::map<WORocket*, RocketContact*> liveRockets;
+   std::map<WORocket*, WOPhysXActor*> liveRockets;
+   std::map<WOPhysXActor*, WOPhysXActor*> objects;
+   RocketContact* contact;
 };
 
 /** \} */
