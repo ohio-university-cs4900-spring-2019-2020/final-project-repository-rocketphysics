@@ -1,5 +1,6 @@
 #include "RocketContact.h"
-
+#include "GLViewFinalRocket.h"
+#include "WorldContainer.h"
 
 using namespace Aftr;
 using namespace physx;
@@ -14,17 +15,10 @@ void RocketContact::onTrigger(PxTriggerPair* pairs, PxU32 count) {
 	for (PxU32 i = 0; i < count; i++)
 	{
 		std::cout << "Trigger: " << pairs[i].otherActor->getName() << ", " << pairs[i].triggerActor->getName() << std::endl;
-		//std::cout << pairs[i].triggerShape->getName() << std::endl;
-		// ignore pairs when shapes have been deleted
-		/*if (pairs[i].flags & (PxTriggerPairFlag::eREMOVED_SHAPE_TRIGGER |
-			PxTriggerPairFlag::eREMOVED_SHAPE_OTHER))
-			continue;
-
-		if ((&pairs[i].otherShape->getActor() == rocketActor) ||
-			(&pairs[i].triggerShape->getActor() == rocketActor))
-		{
-			int i = 0;
-		}*/
+		if (pairs[i].otherActor->getName() == "Grass" && pairs[i].triggerActor->getName() == "Rocket_TS") {
+			PxTransform trans = pairs[i].triggerActor->getGlobalPose();
+			((GLViewFinalRocket*)ManagerGLView::getGLView())->createExplosion(Vector(trans.p.x, trans.p.y, trans.p.z));
+		}
 	}
 }
 

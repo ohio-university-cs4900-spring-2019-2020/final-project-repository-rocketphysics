@@ -42,6 +42,7 @@ public:
 
    void shootRocket();
    void resetBoxes();
+   void createExplosion(Vector center);
    WORocket* startupRocket(Vector spawnLoc, Vector direction);
    WOPhysXActor* startupTrigger(Vector spawnLoc);
 

@@ -37,7 +37,6 @@
 #include "Mat4.h"
 #include <PxSceneDesc.h>
 
-
 using namespace Aftr;
 using namespace physx;
 
@@ -157,6 +156,14 @@ void GLViewFinalRocket::onKeyDown( const SDL_KeyboardEvent& key )
    {
 	   this->resetBoxes();
    }
+   if (key.keysym.sym == SDLK_e)
+   {
+	   Vector position = this->cam->getPosition();
+	   Vector direction = this->cam->getLookDirection();
+	   float dist = 5.5f;
+	   Vector spawnLoc = Vector(position.x + (dist * direction.x), position.y + (dist * direction.y), position.z + (dist * direction.z));
+	   this->createExplosion(spawnLoc);
+   }
 
 }
 
@@ -188,30 +195,6 @@ void Aftr::GLViewFinalRocket::loadMap()
    
    //SkyBox Textures readily available
    std::vector< std::string > skyBoxImageNames; //vector to store texture paths
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_water+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_dust+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_mountains+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_winter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/early_morning+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_afternoon+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_cloudy+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_cloudy3+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_day+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_day2+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_deepsun+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_evening+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_morning+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_morning2+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_noon+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/sky_warp+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_Hubble_Nebula+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_gray_matter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_easter+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_hot_nebula+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_ice_field+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_lemon_lime+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_milk_chocolate+6.jpg" );
-   //skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_solar_bloom+6.jpg" );
    skyBoxImageNames.push_back( ManagerEnvironmentConfiguration::getSMM() + "/images/skyboxes/space_thick_rb+6.jpg" );
 
    float ga = 0.1f; //Global Ambient Light level for this module
@@ -250,7 +233,7 @@ void Aftr::GLViewFinalRocket::loadMap()
    // Init sound
    this->gameSounds = SoundModule::init();
    this->gameSounds->play_sound_2D("../mm/sounds/bensound-jazzyfrenchy.ogg", true, false, true);
-   this->gameSounds->get_sound_2D().at(0)->setVolume(0.3f);
+   this->gameSounds->get_sound_2D().at(0)->setVolume(0.09f);
 
    // Init physics
    this->physicsEngine = PhysicsModule::New();
@@ -271,63 +254,61 @@ void Aftr::GLViewFinalRocket::loadMap()
    rocketLauncher->getModel()->setDisplayMatrix(Mat4::rotateIdentityMat(Vector(0, -1, 0), Aftr::PI / 1.7));
    worldLst->push_back(rocketLauncher);
 
-   // Three boxes that are physics objects
    for (int i = 0; i < 3; i++) {
+	   PxTransform trans2;
+	   if (i == 0)
+		   trans2 = PxTransform(PxVec3(25, 25, 3));
+	   else if (i == 1)
+		   trans2 = PxTransform(PxVec3(30, 25, 3));
+	   else
+		   trans2 = PxTransform(PxVec3(27.5, 25, 8));
+	   PxShape* shape2 = this->physicsEngine->physics->createShape(PxBoxGeometry(PxVec3(2.0f, 2.0f, 2.0f)), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
+	   shape2->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true); // Flags
+	   shape2->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
+	   PxRigidDynamic* actor2 = PxCreateDynamic(*this->physicsEngine->physics, trans2, *shape2, 5.0f);
+	   actor2->setName("SS_Box");
+	   actor2->setMass(50);
+	   WOPhysXActor* box2 = WOPhysXActor::New(actor2, shinyRedPlasticCube, Vector(1, 1, 1));
+	   if (i == 0)
+		   box2->setPosition(Vector(25, 25, 3));
+	   else if (i == 1)
+		   box2->setPosition(Vector(30, 25, 3));
+	   else
+		   box2->setPosition(Vector(27.5, 25, 8));
+	   box2->setLabel("Box2");
+	   box2->physxActor->userData = box2;
+	   box2->getModel()->renderBBox = true;
+	   std::cout << box2->getModel()->getBoundingBox() << std::endl;
+	   worldLst->push_back(box2);
+	   this->physicsEngine->scene->addActor(*box2->physxActor);
+
+	   // Trigger shape box
 	   PxTransform trans;
 	   if (i == 0)
-		  trans = PxTransform(PxVec3(25, 25, 3));
+		   trans = PxTransform(PxVec3(25, 25, 3));
 	   else if (i == 1)
 		   trans = PxTransform(PxVec3(30, 25, 3));
 	   else
 		   trans = PxTransform(PxVec3(27.5, 25, 8));
-	   PxShape* shape = this->physicsEngine->physics->createShape(PxBoxGeometry(PxVec3(2.0f, 2.0f, 2.0f)), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
-	   PxRigidDynamic* actor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 5.0f);
-	   actor->setName("Box");
+	   PxShape* shape = this->physicsEngine->physics->createShape(PxBoxGeometry(PxVec3(2.2f, 2.2f, 2.2f)), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
+	   shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false); // Flags
+	   shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
+	   PxRigidDynamic* actor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 1.0f);
+	   actor->setName("TS_Box");
 	   WOPhysXActor* box = WOPhysXActor::New(actor, shinyRedPlasticCube, Vector(1, 1, 1));
 	   if (i == 0)
 		   box->setPosition(Vector(25, 25, 3));
-	   else if (i==1) 
+	   else if (i == 1)
 		   box->setPosition(Vector(30, 25, 3));
 	   else
 		   box->setPosition(Vector(27.5, 25, 8));
-	   
-	   wo->setLabel("Box");
+	   box->setLabel("Box2");
 	   box->physxActor->userData = box;
 	   worldLst->push_back(box);
 	   this->physicsEngine->scene->addActor(*box->physxActor);
-	   
-	   this->boxes.insert(std::pair(box, numBoxes));
-	   numBoxes++;
+
+	   this->objects.insert(std::pair(box2, box));
    }
-
-   PxTransform trans2 = PxTransform(PxVec3(-25, 25, 3));
-   PxShape* shape2 = this->physicsEngine->physics->createShape(PxBoxGeometry(PxVec3(2.0f, 2.0f, 2.0f)), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
-   shape2->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true); // Flags
-   shape2->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-   PxRigidDynamic* actor2 = PxCreateDynamic(*this->physicsEngine->physics, trans2, *shape2, 5.0f);
-   actor2->setName("Box2_SS");
-   WOPhysXActor* box2 = WOPhysXActor::New(actor2, shinyRedPlasticCube, Vector(1, 1, 1));
-   box2->setPosition(Vector(-25, 25, 3));
-   box2->setLabel("Box2");
-   box2->physxActor->userData = box2;
-   worldLst->push_back(box2);
-   this->physicsEngine->scene->addActor(*box2->physxActor);
-
-   // Trigger shape box
-   PxTransform trans = PxTransform(PxVec3(-25, 25, 3));
-   PxShape* shape = this->physicsEngine->physics->createShape(PxBoxGeometry(PxVec3(2.2f, 2.2f, 2.2f)), *this->physicsEngine->physics->createMaterial(.5f, .3f, .45f));
-   shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false); // Flags
-   shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
-   PxRigidDynamic* actor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 5.0f);
-   actor->setName("Box2_TS");
-   WOPhysXActor* box = WOPhysXActor::New(actor, shinyRedPlasticCube, Vector(1, 1, 1));
-	box->setPosition(Vector(-25, 25, 3));
-   box->setLabel("Box2");
-   box->physxActor->userData = box;
-   worldLst->push_back(box);
-   this->physicsEngine->scene->addActor(*box->physxActor);
-   
-   this->objects.insert(std::pair(box2, box));
 }
 
 
@@ -365,6 +346,7 @@ WORocket* GLViewFinalRocket::startupRocket(Vector spawnLoc, Vector direction) {
 	shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 	PxRigidDynamic* rocketActor = PxCreateDynamic(*this->physicsEngine->physics, trans, *shape, 5.0f);
 	rocketActor->setName("Rocket_SS");
+	rocketActor->setMass(4);
 
 	WORocket* wo = WORocket::New(rocketActor, "../mm/models/sphere.dae", Vector(0.1f, 0.1f, 0.1f));
 	wo->isVisible = false;
@@ -375,7 +357,8 @@ WORocket* GLViewFinalRocket::startupRocket(Vector spawnLoc, Vector direction) {
 
 	this->physicsEngine->scene->addActor(*wo->physxActor);
 
-	PxVec3 pvec_dir = PxVec3(direction.x * 300.0f, direction.y * 300.0f, direction.z * 300.0f + 15.0f);
+	float force = 9000.0f;
+	PxVec3 pvec_dir = PxVec3(direction.x * force, direction.y * force, direction.z * force + 100.0f);
 	wo->physxActor->addForce(pvec_dir);
 	return wo;
 }
@@ -402,12 +385,41 @@ WOPhysXActor* GLViewFinalRocket::startupTrigger(Vector spawnLoc) {
 
 // Resets the 3 physics boxes to their original stack
 void GLViewFinalRocket::resetBoxes() {
-	for (auto& i : this->boxes) {
-		if (i.second == 0)
+	int index = 0;
+	for (auto& i : this->objects) {
+		if (index == 0) {
 			i.first->physxActor->setGlobalPose(PxTransform(PxVec3(25, 25, 3)));
-		else if (i.second == 1)
+		}
+		else if (index == 1) {
 			i.first->physxActor->setGlobalPose(PxTransform(PxVec3(30, 25, 3)));
-		else
+		}
+		else {
 			i.first->physxActor->setGlobalPose(PxTransform(PxVec3(27.5, 25, 8)));
+		}
+		i.first->physxActor->clearForce();
+		i.first->physxActor->setLinearVelocity(PxVec3(0,0,0));
+		i.first->physxActor->setAngularVelocity(PxVec3(0, 0, 0));
+		index++;
+	}
+}
+
+void GLViewFinalRocket::createExplosion(Vector center) {
+	std::cout << "Exploding:\n";
+	this->gameSounds->play_sound_3D("../mm/sounds/explosion.wav", center, false, false, true);
+	this->gameSounds->get_sound_3D().back()->setVolume(10.0f);
+	this->gameSounds->get_sound_3D().back()->setMinDistance(15.0f);
+	PxU32 numActors = 0;
+	PxActor** activeActors = this->physicsEngine->scene->getActiveActors(numActors);
+	for (PxU32 i = 0; i < numActors; i++) {
+		WOPhysXActor* wo = static_cast<WOPhysXActor*>(activeActors[i]->userData);
+		if (wo != nullptr && wo->physxActor != nullptr) {
+			Vector objectCenter = wo->getPosition();
+			Vector explosion = objectCenter - center;
+			if ((pow(explosion.x, 2.0f) + pow(explosion.y, 2.0f) + pow(explosion.y, 2.0f)) < 625.0f) {
+				std::cout << " " << wo->physxActor->getMass() << ": " << objectCenter << ", " << explosion << std::endl;
+				float force = 17000.0f;
+				wo->physxActor->addForce(PxVec3(explosion.x * force, explosion.y * force, explosion.z * force));
+			}
+		}
 	}
 }
